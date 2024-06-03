@@ -1,5 +1,7 @@
 <?php
 
+// src/class-api.php
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }

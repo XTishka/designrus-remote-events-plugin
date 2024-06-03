@@ -1,4 +1,7 @@
 <?php
+
+// src/class-render.php
+
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
@@ -17,7 +20,8 @@ class Events_API_Render {
 	}
 
 	public function display_events_shortcode() {
-		$response = wp_remote_get(rest_url('events-api/v1/events'));
+		$source = sanitize_text_field(get_option('source'));
+		$response = wp_remote_get(trailingslashit($source) . 'wp-json/events-api/v1/events');
 		$events = json_decode(wp_remote_retrieve_body($response), true);
 
 		if (empty($events)) {

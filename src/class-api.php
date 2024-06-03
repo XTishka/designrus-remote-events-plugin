@@ -1,4 +1,7 @@
 <?php
+
+// src/class-api.php
+
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
@@ -21,7 +24,7 @@ class Events_API_Events {
 	private function get_query_args($location, $quantity, $current_time, $paged = 1) {
 		return array(
 			'post_type' => 'ajde_events',
-			'posts_per_page' => $quantity ? $quantity : -1,
+			'posts_per_page' => -1,
 			'paged' => $paged,
 			'tax_query' => array(
 				array(
@@ -82,50 +85,6 @@ class Events_API_Events {
 		}
 
 		return rest_ensure_response($events);
-	}
-
-	public function ajax_load_events() {
-		check_ajax_referer('load_events_nonce', 'nonce');
-
-		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-		$source = sanitize_text_field(get_option('source'));
-		$location = sanitize_text_field(get_option('location'));
-		$quantity = intval(get_option('quantity'));
-
-		$current_time = current_time('timestamp');
-
-		$args = $this->get_query_args($location, $quantity, $current_time, $page);
-
-		$query = new WP_Query($args);
-
-		if ($query->have_posts()) {
-			ob_start();
-			while ($query->have_posts()) {
-				$query->the_post();
-
-				$start_unix = get_post_meta(get_the_ID(), '_unix_start_ev', true);
-				$end_unix = get_post_meta(get_the_ID(), '_unix_end_ev', true);
-
-				$event = array(
-					'id' => get_the_ID(),
-					'title' => get_the_title(),
-					'content' => get_the_content(),
-					'subtitle' => get_post_meta(get_the_ID(), 'evcal_subtitle', true),
-					'background_color' => get_post_meta(get_the_ID(), 'evcal_event_color', true),
-					'start_date' => date('Y-m-d', $start_unix),
-					'start_time' => date('H:i:s', $start_unix),
-					'end_date' => date('Y-m-d', $end_unix),
-					'end_time' => date('H:i:s', $end_unix)
-				);
-
-				echo (new Events_API_Render())->display_event($event);
-			}
-			wp_reset_postdata();
-			$events_html = ob_get_clean();
-			wp_send_json_success($events_html);
-		} else {
-			wp_send_json_error(__('No more events.', 'events-api-plugin'));
-		}
 	}
 }
 

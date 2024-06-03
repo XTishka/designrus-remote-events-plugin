@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: da_DK\n"
+
+msgid "No more events."
+msgstr "Ingen flere begivenheder."
+
+msgid "Source"
+msgstr "Kilde"
+
+msgid "Location"
+msgstr "Sted"
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Failed to load events."
+msgstr "Kunne ikke indlæse begivenheder."
+
+msgid "Source URL is not set."
+msgstr "Kilde-URL er ikke angivet."
+
+msgid "Failed to retrieve events from external source."
+msgstr "Kunne ikke hente begivenheder fra ekstern kilde."
+
+msgid "Coming soon"
+msgstr "Kommer snart"

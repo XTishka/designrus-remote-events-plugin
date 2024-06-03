@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+
+msgid "No more events."
+msgstr "No more events."
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Location"
+msgstr "Location"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "Failed to load events."
+msgstr "Failed to load events."
+
+msgid "Source URL is not set."
+msgstr "Source URL is not set."
+
+msgid "Failed to retrieve events from external source."
+msgstr "Failed to retrieve events from external source."
+
+msgid "Coming soon"
+msgstr "Coming soon"

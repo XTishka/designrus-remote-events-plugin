@@ -7,6 +7,8 @@ Author: Design'R'us | Takhir Berdyiev
 Text Domain: events-api-plugin
 */
 
+// events-api-plugin.php
+
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
@@ -19,8 +21,8 @@ class Events_API_Plugin {
 	private function load_dependencies() {
 		require_once plugin_dir_path(__FILE__) . 'src/class-assets.php';
 		require_once plugin_dir_path(__FILE__) . 'src/class-options.php';
+		require_once plugin_dir_path(__FILE__) . 'src/class-api.php';
 		require_once plugin_dir_path(__FILE__) . 'src/class-render.php';
-		require_once plugin_dir_path(__FILE__) . 'src/class-events.php';
 	}
 }
 
