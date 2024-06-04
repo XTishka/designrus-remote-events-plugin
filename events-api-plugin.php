@@ -5,9 +5,8 @@ Description: A plugin to provide an API for events and a shortcode to display th
 Version: 1.0
 Author: Design'R'us | Takhir Berdyiev
 Text Domain: events-api-plugin
+Domain Path: /languages
 */
-
-// events-api-plugin.php
 
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
