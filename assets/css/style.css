@@ -6,6 +6,8 @@
 .coming-soon-events .header-block {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .coming-soon-events .header-block .header {
@@ -35,6 +37,7 @@
     justify-content: center;
     color: #202124;
     transition: padding-left 0.3s ease;
+    padding: 6px;
 }
 
 .coming-soon-events .header-block .previous_coming_events:hover, .next_coming_events:hover {
@@ -44,67 +47,100 @@
 }
 
 .coming-soon-events .header-block .previous_coming_events svg, .next_coming_events svg {
-    width: 20px;
+    min-width: 20px;
 }
 
-.coming-soon-events .event {
+.coming-soon-events .events-list {
     display: flex;
-    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.coming-soon-events .events-list .event {
     width: 100%;
-    padding: 20px;
     overflow: hidden;
     min-height: 63px;
-    border-radius: 10px;
     margin-bottom: 8px;
     transition: padding-left 0.3s ease;
+    background: rgb(31, 36, 38);
 }
 
-.coming-soon-events .event:hover {
-    padding-left: 30px;
+.coming-soon-events .events-list .event:hover {
     cursor: pointer;
 }
 
-.coming-soon-events .event .date {
-    margin-right: 10px;
-    display: flex;
-    flex-direction: column;
-    min-width: 40px; /* Ensure date doesn't wrap */
+.coming-soon-events .events-list .event  .image-wrapper {
+    width: 100%;
+    height: 0;
+    padding-bottom: 49%;
+    position: relative;
+    overflow: hidden;
 }
 
-.coming-soon-events .event .date .day {
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 110%;
-}
-
-.coming-soon-events .event .date .month {
-    font-size: 11px;
-    text-transform: uppercase;
-    line-height: 1em;
-}
-
-.coming-soon-events .event .content {
-    display: flex;
-    flex-direction: column;
-    min-width: 0; /* Ensure flex items don't grow too large */
-}
-
-.coming-soon-events .event .content .title {
-    line-height: 120%;
-    padding-bottom: 8px;
-    word-wrap: break-word;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-    font-size: 24px;
+.coming-soon-events .events-list .event  .image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
     display: block;
-    font-weight: 800;
+    transition: transform .8s ease;
 }
 
-.coming-soon-events .event .content .subtitle {
-    font-size: 16px;
+.coming-soon-events .events-list .event  .image-wrapper img:hover {
+    transform: scale(1.1);
+}
+
+.coming-soon-events .events-list .event  .content-wrapper{
+    padding: 32px;
+}
+
+.coming-soon-events .events-list .event  .content-wrapper h3 {
+    color: #ffffff;
     text-transform: uppercase;
+    font-weight: 800;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 24px;
 }
 
+.coming-soon-events .header-block .navigation {
+    display: flex;
+}
+
+.coming-soon-events .events-list .event  .content-wrapper .details {
+    display: flex;
+    align-items: center;
+    color: rgb(248, 215, 71);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    line-height: 1.25;
+    font-weight: 500;
+    margin-bottom: 10px;
+} 
+
+.coming-soon-events .events-list .event  .content-wrapper .details svg {
+    width: 20px;
+    margin-right: 20px;
+}
+
+@media only screen and (max-device-width: 480px) {
+    .coming-soon-events .header-block {
+        align-items: normal;
+        justify-content: space-between;
+    }
+    .coming-soon-events .header-block .header {
+        display: block;
+        font-size: 26px;
+    }
+    .coming-soon-events .events-list {
+        flex-direction: column;
+    }
+ }
+
+
+/* Modal */
 .event-overlay {
     display: none;
     position: fixed;
@@ -127,18 +163,16 @@
     z-index: 1001;
     width: 80%;
     max-width: 1000px;
-    border-radius: 10px;
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
 }
 
 .event-modal-header {
     padding: 10px;
-    background: #333; /* Будет изменено динамически */
+    background: #333;
     color: #fff;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .event-modal-header-wrapper {
@@ -168,21 +202,28 @@
     margin-right: 20px;
 }
 
-.event-modal-day {
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 110%;
-}
-
-.event-modal-month {
-    font-size: 11px;
-    text-transform: uppercase;
-    line-height: 1em;
-}
-
 .event-modal-text {
     display: flex;
     flex-direction: column;
+}
+.event-modal-text  ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+.event-modal-text  ul li {
+    margin-top: 20px;
+    margin-right: 20px;
+    color: rgb(248, 215, 71);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    line-height: 1.25;
+    font-weight: 500;
+}
+.event-modal-text  ul li svg {
+    width: 20px;
+    margin-right: 10px;
 }
 
 .event-modal-close {
@@ -193,7 +234,26 @@
     transition: padding-left 0.3s ease;
 }
 
+.event-modal-close:hover {
+    color: rgb(248, 215, 71);
+}
+
 .event-modal-body {
     padding: 20px;
     background: #fff;
 }
+
+
+@media only screen and (max-device-width: 480px) {
+    .event-modal {
+        width: 90%;
+    }
+    .event-modal-text ul {
+        align-items: start !important;
+        flex-direction: column !important;
+        margin-top: 10px;
+    }
+    .event-modal-text ul li {
+        margin-top: 5px !important;
+    }
+ }

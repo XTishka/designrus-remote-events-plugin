@@ -21,10 +21,10 @@ class Events_API_Events {
 		));
 	}
 
-	private function get_query_args($location, $quantity, $current_time, $paged = 1) {
+	private function get_query_args($location, $quantity = 3, $current_time, $paged = 1) {
 		return array(
 			'post_type' => 'ajde_events',
-			'posts_per_page' => -1,
+			'posts_per_page' => $quantity,
 			'paged' => $paged,
 			'tax_query' => array(
 				array(
@@ -50,22 +50,23 @@ class Events_API_Events {
 	public function get_events($request) {
 		$source = sanitize_text_field(get_option('source'));
 		$location = sanitize_text_field(get_option('location'));
-		$quantity = intval(get_option('quantity'));
-
+		$quantity = intval($request->get_param('quantity') ? $request->get_param('quantity') : get_option('quantity'));
+		$paged = intval($request->get_param('page') ? $request->get_param('page') : 1);
+	
 		$current_time = current_time('timestamp');
-
-		$args = $this->get_query_args($location, $quantity, $current_time);
-
+	
+		$args = $this->get_query_args($location, $quantity, $current_time, $paged);
+	
 		$query = new WP_Query($args);
 		$events = array();
-
+	
 		if ($query->have_posts()) {
 			while ($query->have_posts()) {
 				$query->the_post();
-
+	
 				$start_unix = get_post_meta(get_the_ID(), '_unix_start_ev', true);
 				$end_unix = get_post_meta(get_the_ID(), '_unix_end_ev', true);
-
+	
 				$events[] = array(
 					'id' => get_the_ID(),
 					'title' => get_the_title(),
@@ -78,14 +79,23 @@ class Events_API_Events {
 					'start_time' => date('H:i:s', $start_unix),
 					'end_date' => date('Y-m-d', $end_unix),
 					'end_time' => date('H:i:s', $end_unix),
+					'featured_image' => get_the_post_thumbnail_url(get_the_ID(), 'full'),
 					'meta_data' => get_post_meta(get_the_ID())
 				);
 			}
 			wp_reset_postdata();
 		}
 
-		return rest_ensure_response($events);
+		$total_posts = $query->found_posts;
+    	$total_pages = ceil($total_posts / $quantity);
+	
+		return rest_ensure_response(array(
+			'events' => $events,
+			'total_pages' => $total_pages,
+			'current_page' => $paged
+		));
 	}
+	
 }
 
 new Events_API_Events();
